@@ -1,0 +1,45 @@
+{% extends 'layouts/master.html' %}
+{% block title %}View{% endblock %}
+{% block body %}
+<h1>Correspondencia</h1>
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th scope="col">N°OFICIO</th>
+			<th scope="col">FECHA</th>
+			<th scope="col">RECIBIDO</th>
+			<th scope="col">REMITIDO</th>
+			<th scope="col">FINALIDAD</th>
+			<th scope="col">ASUNTO</th>
+			<th scope="col">RESPUESTA</th>
+			<th scope="col">FECHA RESPUESTA</th>
+			<th scope="col">OBSERVACION</th>
+			<td></td>
+		</tr>
+	</thead>
+	<tbody>
+	{% for contact in contacts %}
+		<tr>
+			<td>{{ contact.n_oficio }}</td>
+			<td>{{ contact.fecha }}</td>
+			<td>{{ contact.recibido }}</td>
+			<td>{{ contact.remitido }}</td>
+			<td>{{ contact.finalidad }}</td>
+			<td>{{ contact.asunto }}</td>
+			<td>{{ contact.respuesta }}</td>
+			<td>{{ contact.fecha_respuesta }}</td>
+			<td>{{ contact.observacion}}</td>
+			<td class="text-right">
+				<div class="row">
+					<form action="{{ url_for('contacts_delete') }}" method="post" class="pull-right">
+						<input type="hidden" name="id" value="{{ contact.id }}">
+						<input type="submit" class="btn btn-danger" data-toggle="confirmation" {# data-title="¿Estas seguro?" #} value="Delete">
+					</form>
+					<a class="btn btn-primary pull-right" href="{{ url_for('edit_contact', id=contact.id) }}">Edit</a>
+				</div>
+			</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+{% endblock %}
